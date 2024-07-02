@@ -16,6 +16,12 @@ export type Owner = {
 	name: string;
 }& MicroCMSDate
 
+export type Image = {
+  url: string;
+  height: number;
+  width: number;
+}
+
 export type Book = {
   id: string;
   createdAt: string;
@@ -24,13 +30,9 @@ export type Book = {
   revisedAt: string;
   title: string;
   content: string;
-  image: {
-    url: string;
-    height: number;
-    width: number;
-  };
+  image: Image;
   categories: Category[];
-  owner: Category;
+  owner: Owner;
 };
 
 export type BookResponse = {

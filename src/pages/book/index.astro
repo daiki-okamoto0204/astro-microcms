@@ -5,10 +5,10 @@ import { getBooks } from "../../lib/getBooks";
 
 export const prerender = true;
 
-const { contents: books } = await getBooks({ fields: ["id", "title", "publishedAt"] });
+const { contents: books } = await getBooks({});
 ---
 
-<Layout title="Blog Top - Astro" menu="blog">
+<Layout title="書籍一覧｜Astroサンプル" menu="book">
   <div class="bg-white py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl lg:mx-0">

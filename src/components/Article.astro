@@ -1,24 +1,28 @@
 ---
-interface Article {
-  title: string;
-  date: string;
-  description: string;
-  id: string;
-}
+import type { Book } from "../lib/getBooks";
 
-const { title, date, description, id } = Astro.props as Article;
+const { title, id, image } = Astro.props as Book;
 ---
 
 <article class="flex max-w-xl flex-col items-start justify-between">
   <div class="flex items-center gap-x-4 text-xs">
-    <time datetime="2020-03-16" class="text-gray-500">{date}</time>
     <a
       href={`/blog/${id}`}
       class="relative z-10 rounded-full bg-gray-50 py-1.5 px-3 font-medium text-gray-600 hover:bg-gray-100"
-      >Tech</a
     >
+      Tech
+    </a>
   </div>
   <div class="group relative">
+    <div
+      class="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80"
+    >
+      <img
+        src={image?.url ?? ''}
+        alt="Front of men's Basic Tee in black."
+        class="h-full w-full object-cover object-center lg:h-full lg:w-full"
+      />
+    </div>
     <h3
       class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600"
     >
@@ -27,13 +31,16 @@ const { title, date, description, id } = Astro.props as Article;
         {title}
       </a>
     </h3>
-    <p class="mt-5 text-sm leading-6 text-gray-600 line-clamp-3">
-      {description}
-    </p>
+    <a
+      href={`/blog/${id}`}
+      class="relative z-10 rounded-full bg-gray-50 py-1.5 px-3 font-medium text-gray-600 hover:bg-gray-100"
+    >
+      Tech
+    </a>
   </div>
   <div class="relative mt-8 flex items-center gap-x-4">
     <img
-      src="https://avatars.githubusercontent.com/u/14899056?v=4"
+      src="https://avatars.githubusercontent.com/u/92777873?v=4"
       alt=""
       class="h-10 w-10 rounded-full bg-gray-50"
     />
@@ -41,7 +48,7 @@ const { title, date, description, id } = Astro.props as Article;
       <p class="font-semibold text-gray-900">
         <a href={`/blog/${id}`}>
           <span class="absolute inset-0"></span>
-          Thirosue
+          岡本大貴
         </a>
       </p>
       <p class="text-gray-600">Engineer</p>
