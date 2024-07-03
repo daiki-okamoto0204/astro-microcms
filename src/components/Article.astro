@@ -1,17 +1,19 @@
 ---
 import type { Book } from "../lib/getBooks";
 
-const { title, id, image } = Astro.props as Book;
+const { title, id, image, categories } = Astro.props as Book;
 ---
 
 <article class="flex max-w-xl flex-col items-start justify-between">
   <div class="flex items-center gap-x-4 text-xs">
-    <a
-      href={`/blog/${id}`}
-      class="relative z-10 rounded-full bg-gray-50 py-1.5 px-3 font-medium text-gray-600 hover:bg-gray-100"
-    >
-      Tech
-    </a>
+    {categories.map((category) => (
+      <a
+        href={`/book/category/${category.id}`}
+        class="relative z-10 rounded-full bg-gray-50 py-1.5 px-3 font-medium text-gray-600 hover:bg-gray-100"
+      >
+        {category.name}
+      </a>
+    ))}
   </div>
   <div class="group relative">
     <div
@@ -20,13 +22,13 @@ const { title, id, image } = Astro.props as Book;
       <img
         src={image?.url ?? ''}
         alt="Front of men's Basic Tee in black."
-        class="h-full w-full object-cover object-center lg:h-full lg:w-full"
+        class="h-full w-full object-cover object-center group-hover:opacity-75"
       />
     </div>
     <h3
       class="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600"
     >
-      <a href={`/blog/${id}`}>
+      <a href={`/book/detail/${id}`}>
         <span class="absolute inset-0"></span>
         {title}
       </a>
@@ -40,7 +42,7 @@ const { title, id, image } = Astro.props as Book;
     />
     <div class="text-sm leading-6">
       <p class="font-semibold text-gray-900">
-        <a href={`/blog/${id}`}>
+        <a href={`/book/detail/${id}`}>
           <span class="absolute inset-0"></span>
           岡本大貴
         </a>
