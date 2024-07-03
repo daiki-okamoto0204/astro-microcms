@@ -1,0 +1,29 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getBooks, getBookDetail } from '../../../lib/getBooks';
+
+// getStaticPaths() 関数で生成するパスの配列を返す
+export const getStaticPaths = async () => {
+  // microCMSからコンテンツのidを取得
+  // TODO:microCMSではlimitの上限値が100なので、responseのtotalCountが100以上の場合は再度実行する
+  const response = await getBooks({ fields: ["id"], limit: 100 });
+  // 生成するパスの配列を返す
+  return response.contents.map((content) => ({
+    params: {
+      id: content.id,
+    },
+  }));
+};
+// Astro.paramsから各ルーティングのidを取得
+const { id } = Astro.params;
+const book = await getBookDetail(id as string);
+---
+
+<Layout title={`${book.title}｜書籍一覧｜Astroサンプル`}>
+  <main>
+    <div>
+        <h1>{book.title}</h1>
+      <div>
+    </div>
+  </main>
+</Layout>

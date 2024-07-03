@@ -1,0 +1,48 @@
+---
+import Layout from "../layouts/Layout.astro";
+// import Recommend from "../components/Recommend.astro";
+import { BookList } from "../components/BookList";
+
+// import { getRecommends } from "../lib/getRecommends";
+
+// const recommends = await getRecommends();
+---
+
+<Layout title="Search - Astro" menu="search">
+  <main>
+    <!-- Search Results -->
+    <div class="bg-white">
+      <div class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h2 class="sr-only">検索結果</h2>
+        <BookList client:only="react" />
+      </div>
+    </div>
+    <!-- End Search Results -->
+
+    <!-- Recommends -->
+    <div class="bg-white">
+      <div
+        class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8"
+      >
+        <h2 class="text-2xl font-bold tracking-tight text-gray-900">
+          人気の書籍
+        </h2>
+        <div
+          class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+        >
+          {/*
+            recommends.data
+              .slice(0, 4)
+              .map((item) => (
+                <Recommend
+                  {...item}
+                  href={`https://thirosue.github.io/hosting-image2/astro-sample/product/${item.id}/main.jpeg`}
+                />
+              ))
+          */}
+        </div>
+      </div>
+    </div>
+    <!-- End Recommends -->
+  </main>
+</Layout>
