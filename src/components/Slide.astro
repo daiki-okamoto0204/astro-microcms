@@ -1,0 +1,24 @@
+---
+interface Props {
+  url: string;
+  title: string;
+  desc: string;
+  sub_desc: string
+}
+
+const { url, title, desc, sub_desc } = Astro.props;
+---
+
+<div class="hs-carousel-slide">
+  <div class=`h-[30rem] md:h-[calc(100vh-106px)] md:h-[calc(100vh-106px)] flex flex-col bg-[url('${url}')] bg-cover bg-center bg-no-repeat`>
+    <div class="mt-auto w-2/3 md:max-w-lg ps-5 pb-5 md:ps-10 md:pb-10">
+      <span class="block text-white">{title}</span>
+      <span class="block text-white text-xl md:text-3xl">{desc}</span>
+      <div class="mt-5">
+        <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white border border-transparent text-black hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none" href="#">
+          {sub_desc}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -9,7 +9,7 @@ interface Props {
     title: string;
     image: Image;
 }
-  
+
 export const Book = ({ id, title, image }: Props) => (
     <a href={`/book/detail/${id}`} className="group">
         <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">

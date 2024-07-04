@@ -1,11 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-// import Recommend from "../components/Recommend.astro";
+import NewArrival from "../components/NewArrival.astro";
 import { BookList } from "../components/BookList";
+import { getBooks } from "../lib/getBooks";
 
-// import { getRecommends } from "../lib/getRecommends";
-
-// const recommends = await getRecommends();
+const limit = import.meta.env.NEW_ARRIVALS_LIMIT;
+const { contents: newArrivals } = await getBooks({ limit, fields: ["id", "owner", "image", "categories", "title"] });
 ---
 
 <Layout title="Search - Astro" menu="search">
@@ -13,7 +13,7 @@ import { BookList } from "../components/BookList";
     <!-- Search Results -->
     <div class="bg-white">
       <div class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h2 class="sr-only">検索結果</h2>
+        <h2 class="sr-only">Search Result</h2>
         <BookList client:only="react" />
       </div>
     </div>
@@ -25,21 +25,16 @@ import { BookList } from "../components/BookList";
         class="mx-auto max-w-2xl py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8"
       >
         <h2 class="text-2xl font-bold tracking-tight text-gray-900">
-          人気の書籍
+          New Arrivals
         </h2>
         <div
           class="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
         >
-          {/*
-            recommends.data
-              .slice(0, 4)
-              .map((item) => (
-                <Recommend
-                  {...item}
-                  href={`https://thirosue.github.io/hosting-image2/astro-sample/product/${item.id}/main.jpeg`}
-                />
-              ))
-          */}
+          {
+            newArrivals.map((book) => (
+              <NewArrival {...book} />
+            ))
+          }
         </div>
       </div>
     </div>
