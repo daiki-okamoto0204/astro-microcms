@@ -32,9 +32,9 @@ const { contents: newArrivals } = await getBooks({ limit, fields: ["id", "owner"
 
 <Layout title="Astroサンプル" menu="top">
   <!-- Slider -->
-  <div class="px-4 lg:px-6 lg:px-8">
+  <div class="px-4 lg:px-8">
     <div class="relative">
-      <div class="hs-carousel relative overflow-hidden w-full h-[30rem] md:h-[calc(100vh-106px)] md:h-[calc(100vh-106px)] bg-gray-100 rounded-2xl dark:bg-neutral-800">
+      <div class="hs-carousel relative overflow-hidden w-full h-[30rem] md:h-[calc(100vh-106px)] bg-gray-100 rounded-2xl dark:bg-neutral-800">
         <div class="hs-carousel-body absolute top-0 bottom-0 start-0 flex flex-nowrap transition-transform duration-700 opacity-0">
             <!-- Item -->
             {slider.map((slide) => (
@@ -68,7 +68,7 @@ const { contents: newArrivals } = await getBooks({ limit, fields: ["id", "owner"
   <!-- End Slider -->
 
   <!-- New Arrivals -->
-  <div class="max-w-7xl px-4 lg:px-6 lg:px-8 py-12 lg:py-24 mx-auto">
+  <div class="max-w-7xl px-4 lg:px-8 py-12 lg:py-24 mx-auto">
     <div class="mb-6 sm:mb-10 max-w-2xl text-center mx-auto">
       <h1 class="font-medium text-black text-2xl sm:text-4xl dark:text-white">
         New Arrivals
@@ -97,7 +97,7 @@ const { contents: newArrivals } = await getBooks({ limit, fields: ["id", "owner"
 
   <!-- Testimonials -->
   <div class="bg-black">
-    <div class="max-w-7xl px-4 lg:px-6 lg:px-8 py-12 lg:py-24 mx-auto">
+    <div class="max-w-7xl px-4 lg:px-8 py-12 lg:py-24 mx-auto">
       <blockquote class="max-w-4xl mx-auto">
         <p class="mb-6 md:text-lg">
           <span class="font-semibold text-lime-400">Philip,</span> <span class="text-neutral-500">CEO at Day Spa</span>
@@ -125,7 +125,7 @@ const { contents: newArrivals } = await getBooks({ limit, fields: ["id", "owner"
   <!-- End Testimonials -->
 
   <!-- Contact -->
-  <div class="max-w-7xl px-4 lg:px-6 lg:px-8 py-12 lg:py-24 mx-auto">
+  <div class="max-w-7xl px-4 lg:px-8 py-12 lg:py-24 mx-auto">
     <div class="mb-6 sm:mb-10 max-w-2xl text-center mx-auto">
       <h2 class="font-medium text-black text-2xl sm:text-4xl dark:text-white">
         Contacts
