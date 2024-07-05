@@ -13,6 +13,7 @@ export type Book = {
   updatedAt: string;
   publishedAt: string;
   revisedAt: string;
+  overview: string;
   title: string;
   content: string;
   image: Image;
