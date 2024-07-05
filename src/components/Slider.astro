@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets';
+import slide01 from '/public/assets/images/slide-1.avif'
+import slide02 from '/public/assets/images/slide-2.avif'
+import slide03 from '/public/assets/images/slide-3.avif'
+
+const SlideArray = [
+  {
+    image: slide01,
+    title: "Nike React",
+    desc: "Rewriting sport's playbook for billions of athletes",
+    sub_desc: "Read Case Studies",
+  },
+  {
+    image: slide02,
+    title: "CoolApps",
+    desc: "From mobile apps to gaming consoles",
+    sub_desc: "Read Case Studies",
+  },
+  {
+    image: slide03,
+    title: "Grumpy",
+    desc: "Bringing Art to everything",
+    sub_desc: "Read Case Studies",
+  },
+]
+---
+
+<div class="px-4 lg:px-8">
+  <div class="relative">
+    <div class="swiper hs-carousel relative overflow-hidden w-full h-[30rem] md:h-[calc(100vh-106px)] bg-gray-100 rounded-2xl dark:bg-neutral-800">
+      <div class="swiper-wrapper">
+        <!-- Item -->
+        {SlideArray.map((slide) => (
+          <div class="swiper-slide"><Image src={slide.image} alt="" /></div>
+        ))}
+        <!-- End Item -->
+      </div>
+    </div>
+
+    <div class="swiper-pagination"></div>
+
+    <div class="swiper-button swiper-button-prev"></div>
+    <div class="swiper-button swiper-button-next"></div>
+
+    <div class="swiper-scrollbar"></div>
+  </div>
+</div>
+
+<script>
+  import Swiper from 'swiper'
+  import { Navigation } from 'swiper/modules'
+  import 'swiper/css/bundle'
+
+  export const swiperConfig = {
+    modules: [Navigation],
+    // Optional parameters
+    loop: true,
+
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+
+    // And if we need scrollbar
+    scrollbar: {
+      el: '.swiper-scrollbar',
+    },
+  }
+
+  const swiper = new Swiper('.swiper', swiperConfig)
+</script>
