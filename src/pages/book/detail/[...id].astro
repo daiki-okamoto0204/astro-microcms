@@ -28,7 +28,7 @@ const book = await getBookDetail(id as string);
           <div class="flex items-center gap-x-4 text-xs mb-1">
             {book.categories.map((category) => (
               <a
-                href={`/book/category/${category.id}`}
+                href={`/book/category/${category.slug}`}
                 class="relative z-10 rounded-full bg-gray-50 py-1.5 px-3 font-medium text-gray-600 hover:bg-gray-100"
               >
                 {category.name}

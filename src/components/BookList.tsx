@@ -9,23 +9,14 @@ export const BookList = () => {
   );
 
   return (
-    <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+    <>
       {books.length > 0 ? (
-        <>
+        <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {books.map((book) => <Book {...book} />)}
-          {books.length > 8 && !showAll && (
-            <a
-              href="#"
-              onClick={() => setShowAll(true)}
-              className="font-medium text-blue-600 hover:underline"
-            >
-              Read more
-            </a>
-          )}
-        </>
+        </div>
       ) : (
         <div className="text-center text-2xl">書籍は見つかりませんでした。</div>
       )}
-    </div>
+    </>
   );
 };

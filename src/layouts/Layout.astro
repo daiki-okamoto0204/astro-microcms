@@ -96,15 +96,6 @@ const { title, menu } = Astro.props as Props;
             </div>
             <div>
               <a class={`inline-block ${
-                  menu === "book"
-                    ? "relative inline-block text-black before:absolute before:bottom-0.5 before:start-0 before:-z-[1] before:w-full before:h-1 before:bg-lime-400 dark:text-white"
-                    : "text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300"
-                }`}
-                href="/book/">Book</a
-              >
-            </div>
-            <div>
-              <a class={`inline-block ${
                   menu === "search"
                     ? "relative inline-block text-black before:absolute before:bottom-0.5 before:start-0 before:-z-[1] before:w-full before:h-1 before:bg-lime-400 dark:text-white"
                     : "text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300"
@@ -114,11 +105,11 @@ const { title, menu } = Astro.props as Props;
             </div>
             <div>
               <a class={`inline-block ${
-                  menu === "category"
+                  menu === "book"
                     ? "relative inline-block text-black before:absolute before:bottom-0.5 before:start-0 before:-z-[1] before:w-full before:h-1 before:bg-lime-400 dark:text-white"
                     : "text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300"
                 }`}
-                href="/book/category/">Category</a
+                href="/book/">Book</a
               >
             </div>
           </div>

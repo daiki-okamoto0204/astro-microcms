@@ -1,7 +1,8 @@
 import { createClient } from "microcms-js-sdk";
 import type { MicroCMSQueries } from "microcms-js-sdk";
 import type { Book } from "../types/Book";
-import type { BookResponse } from "../types/MicroCMSResponse";
+import type { Category } from "../types/Category";
+import type { MicroCMSResponse } from "../types/MicroCMSResponse";
 
 const client = createClient({
   serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN,
@@ -9,7 +10,11 @@ const client = createClient({
 });
 
 export const getBooks = async (queries?: MicroCMSQueries) => {
-  return await client.get<BookResponse>({ endpoint: "books", queries });
+  return await client.get<MicroCMSResponse<Book>>({ endpoint: "books", queries });
+};
+
+export const getCategories = async (queries?: MicroCMSQueries) => {
+  return await client.get<MicroCMSResponse<Category>>({ endpoint: "categories", queries });
 };
 
 export const getBookDetail = async (

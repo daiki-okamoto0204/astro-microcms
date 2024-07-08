@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { createClient } from "microcms-js-sdk";
 import type { Book } from "../types/Book";
-import type { BookResponse } from "../types/MicroCMSResponse";
+import type { MicroCMSResponse } from "../types/MicroCMSResponse";
 
 // Book の state と更新ロジックを持つフック
 const useBooks = (keyword: string | null) => {
@@ -18,7 +18,7 @@ const useBooks = (keyword: string | null) => {
       });
       // コンテンツに対して全文検索を行う
       // https://document.microcms.io/content-api/get-list-contents#ha8abec0b2f
-      const { contents: data } = await client.get<BookResponse>({ endpoint: "books", queries: { fields: ["id", "title", "image"], q: keyword } });
+      const { contents: data } = await client.get<MicroCMSResponse<Book>>({ endpoint: "books", queries: { fields: ["id", "title", "image"], q: keyword } });
       console.log(keyword, data);
       setBooks(data);
     };

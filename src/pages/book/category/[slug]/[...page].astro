@@ -1,0 +1,80 @@
+---
+import Layout from '../../../../layouts/Layout.astro';
+import Article from "../../../../components/Article.astro";
+import { getCategories, getBooks } from "../../../../lib/getBooks";
+import type { MicroCMSResponse } from "../../../../types/MicroCMSResponse";
+import type { Category } from "../../../../types/Category";
+import type { Book } from "../../../../types/Book";
+import type { GetStaticPathsOptions } from 'astro';
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const { contents: categoryList } = await getCategories({
+    limit: 100,
+    fields: ['id', 'name', 'slug'],
+  });
+  
+  const paths = await Promise.all(categoryList.map(async (category) => {
+    const {contents: books} = await getBooks({ filters: `categories[contains]${category.id}` });
+        
+    if (books && books.length > 0) {
+      return paginate(books, {
+        params: { slug: category.slug },
+        pageSize: 9,
+        props: { name: category.name }
+      });
+    } else {
+      return [{
+        params: { slug: category.slug, name: category.name, page: "1" },
+        props: { page: { data: [], currentPage: 1, lastPage: 1, url: {prev: '', next: ''}, name: category.name } }
+      }];
+    }
+  }));
+
+  // 空の配列を除去
+  return paths.flat().filter(path => path !== null);
+}
+
+const { page, name } = Astro.props;
+const { slug } = Astro.params;
+---
+
+<Layout title={ page.currentPage == 1 ? `${name}の書籍一覧｜Astroサンプル` : `${page.currentPage}ページ目｜${name}の書籍一覧｜Astroサンプル`} menu="book">
+  <div class="bg-white py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto max-w-2xl lg:mx-0">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          {`${name}の書籍一覧`}
+        </h2>
+        <p class="mt-2 text-lg leading-8 text-gray-600">
+          Learn how to grow your business with our expert advice.
+        </p>
+      </div>
+      <div
+        class="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 xl:gap-x-8"
+      >
+        {page.data.map((book) => <Article {...book} />)}
+      </div>
+
+      <div class="flex items-center justify-center mt-10">
+        {/* page.url.prevがある場合は前ページへのリンクを表示 */}
+        {page.url.prev && (
+          <a href={page.url.prev} class="flex items-center justify-center px-4 h-10 me-3 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+            </svg>
+            Previous
+          </a>
+        )}
+        {/* page.url.nextがある場合は次ページへのリンクを表示 */}
+        {page.url.next && (
+          <a href={page.url.next} class="flex items-center justify-center px-4 h-10 text-base font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+            Next
+            <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+            </svg>
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+</Layout>

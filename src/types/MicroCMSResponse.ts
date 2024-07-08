@@ -1,8 +1,6 @@
-import type { Book } from "./Book";
-
-export type BookResponse = {
+export interface MicroCMSResponse<T> {
+  contents: T[];
   totalCount: number;
   offset: number;
   limit: number;
-  contents: Book[];
-};
+}
