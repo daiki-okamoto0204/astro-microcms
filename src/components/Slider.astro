@@ -25,7 +25,7 @@ const { mainVisual } = await getMainVisual();
                 src={mv.image.url}
                 width={mv.image?.width ?? '1500'}
                 height={mv.image?.height ?? '400'}
-                loading={index == 1 ? 'eager' : 'lazy'}
+                loading={index == 0 ? 'eager' : 'lazy'}
               />
             )}
             
