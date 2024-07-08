@@ -3,6 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import Slider from "../components/Slider.astro";
 import NewArrival from "../components/NewArrival.astro";
 import { getBooks } from "../lib/getBooks";
+import { Image } from 'astro:assets';
+import image01 from "../../public/assets/images/contact.avif";
 
 export const prerender = true;
 const limit = import.meta.env.NEW_ARRIVALS_LIMIT;
@@ -82,7 +84,14 @@ const { contents: newArrivals } = await getBooks({ limit, fields: ["id", "owner"
 
     <div class="grid grid-cols-1 lg:grid-cols-2 lg:items-center gap-6 md:gap-8 lg:gap-12">
       <div class="aspect-w-16 aspect-h-6 lg:aspect-h-14 overflow-hidden bg-gray-100 rounded-2xl dark:bg-neutral-800">
-        <img class="group-hover:scale-105 transition-transform duration-500 ease-in-out object-cover rounded-2xl" src="https://images.unsplash.com/photo-1572021335469-31706a17aaef?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Image Description">
+        <Image
+          loading="lazy"
+          class="group-hover:scale-105 transition-transform duration-500 ease-in-out object-cover rounded-2xl"
+          src={image01}
+          width="800"
+          height="500"
+          alt="Image Description"
+        />
       </div>
       <!-- End Col -->
 

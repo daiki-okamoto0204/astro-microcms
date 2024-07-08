@@ -1,7 +1,7 @@
 ---
 import type { Book } from "../types/Book";
 
-const { title, id, image, categories } = Astro.props as Book;
+const { title, id, image, categories, owner } = Astro.props as Book;
 ---
 
 <article class="flex max-w-xl flex-col items-start justify-between">
@@ -36,7 +36,7 @@ const { title, id, image, categories } = Astro.props as Book;
   </div>
   <div class="relative mt-8 flex items-center gap-x-4">
     <img
-      src="https://avatars.githubusercontent.com/u/92777873?v=4"
+      src={owner.image?.url ?? 'https://avatars.githubusercontent.com/u/92777873?v=4'}
       alt=""
       class="h-10 w-10 rounded-full bg-gray-50"
     />
@@ -44,10 +44,10 @@ const { title, id, image, categories } = Astro.props as Book;
       <p class="font-semibold text-gray-900">
         <a href={`/book/detail/${id}`}>
           <span class="absolute inset-0"></span>
-          岡本大貴
+          {owner.name}
         </a>
       </p>
-      <p class="text-gray-600">Engineer</p>
+      <p class="text-gray-600">{owner.position}</p>
     </div>
   </div>
 </article>

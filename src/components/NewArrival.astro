@@ -8,6 +8,9 @@ const { id, image, title, owner, categories } = Astro.props as Book;
   <div class="aspect-w-16 aspect-h-12 overflow-hidden bg-gray-100 rounded-2xl dark:bg-neutral-800">
     <img
       class="group-hover:scale-105 transition-transform duration-500 ease-in-out object-cover rounded-2xl"
+      loading="lazy"
+      width={image.width}
+      height={image.height}
       src={image?.url ?? ''}
       alt={title}
     >

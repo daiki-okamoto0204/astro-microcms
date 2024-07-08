@@ -1,29 +1,7 @@
 ---
-import { Image } from 'astro:assets';
-import slide01 from '/public/assets/images/slide-1.avif'
-import slide02 from '/public/assets/images/slide-2.avif'
-import slide03 from '/public/assets/images/slide-3.avif'
+import { getMainVisual } from '../lib/getMainVisual';
 
-const SlideArray = [
-  {
-    image: slide01,
-    title: "Nike React",
-    desc: "Rewriting sport's playbook for billions of athletes",
-    sub_desc: "Read Case Studies",
-  },
-  {
-    image: slide02,
-    title: "CoolApps",
-    desc: "From mobile apps to gaming consoles",
-    sub_desc: "Read Case Studies",
-  },
-  {
-    image: slide03,
-    title: "Grumpy",
-    desc: "Bringing Art to everything",
-    sub_desc: "Read Case Studies",
-  },
-]
+const { mainVisual } = await getMainVisual();
 ---
 
 <div class="px-4 lg:px-8">
@@ -31,8 +9,27 @@ const SlideArray = [
     <div class="swiper hs-carousel relative overflow-hidden w-full h-[30rem] md:h-[calc(100vh-106px)] bg-gray-100 rounded-2xl dark:bg-neutral-800">
       <div class="swiper-wrapper">
         <!-- Item -->
-        {SlideArray.map((slide) => (
-          <div class="swiper-slide"><Image src={slide.image} alt="" /></div>
+        {mainVisual.map((mv, index) => (
+          <div class="swiper-slide">
+            {mv?.link ? (
+              <a href={mv.link} target="_blank" rel="noopener noreferrer">
+                <img
+                  src={mv.image.url}
+                  width={mv.image?.width ?? '1500'}
+                  height={mv.image?.height ?? '400'}
+                  loading={index == 1 ? 'eager' : 'lazy'}
+                />
+              </a>
+            ) : (
+              <img
+                src={mv.image.url}
+                width={mv.image?.width ?? '1500'}
+                height={mv.image?.height ?? '400'}
+                loading={index == 1 ? 'eager' : 'lazy'}
+              />
+            )}
+            
+          </div>
         ))}
         <!-- End Item -->
       </div>
