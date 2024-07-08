@@ -8,6 +8,7 @@ export type CustomFirld = {
   fieldId: string;
   image: Image;
   link: string;
+  alt: string;
 }
 
 export type MainVisual = {
