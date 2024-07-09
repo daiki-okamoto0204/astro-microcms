@@ -2,9 +2,6 @@
 import Layout from '../../../../layouts/Layout.astro';
 import Article from "../../../../components/Article.astro";
 import { getCategories, getBooks } from "../../../../lib/getBooks";
-import type { MicroCMSResponse } from "../../../../types/MicroCMSResponse";
-import type { Category } from "../../../../types/Category";
-import type { Book } from "../../../../types/Book";
 import type { GetStaticPathsOptions } from 'astro';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
