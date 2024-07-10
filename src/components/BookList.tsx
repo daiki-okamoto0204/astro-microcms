@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { Book } from "./Book";
 import useBooks from "../hook/useBooks";
 
 export const BookList = () => {
-  const [showAll, setShowAll] = useState(false);
   const { books } = useBooks(
     new URLSearchParams(window.location.search).get("keyword")
   );

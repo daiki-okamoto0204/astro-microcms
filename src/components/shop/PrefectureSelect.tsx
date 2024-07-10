@@ -1,8 +1,9 @@
-'use client'
 import { useCallback } from 'react'
 import type { Prefectures } from '../../types/Prefectures';
+import usePrefectures from '../../hook/usePrefectures';
 
-const PrefectureSelect = ({ prefectures }: { prefectures: Prefectures[] }) => {
+export const PrefectureSelect = () => {
+  const { prefectures } = usePrefectures();
 //   const searchParams = useSearchParams()
 //   const pathname = usePathname()
 //   const { replace } = useRouter()
@@ -27,6 +28,7 @@ const PrefectureSelect = ({ prefectures }: { prefectures: Prefectures[] }) => {
 //     },
 //     [pathname, replace, searchParams, prefectures]
 //   )
+  console.log(prefectures);
 
   return (
     <div className="grid gap-2">
@@ -50,6 +52,4 @@ const PrefectureSelect = ({ prefectures }: { prefectures: Prefectures[] }) => {
       </select>
     </div>
   )
-}
-
-export default PrefectureSelect
+};

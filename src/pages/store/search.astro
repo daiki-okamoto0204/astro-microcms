@@ -1,7 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import { Spinner } from '../../components/shop/Spinner';
-// import Search from '../../components/shop/Search';
+import { StoreSearch } from "../../components/shop/StoreSearch";
 import { Result } from "../../components/shop/Result";
 // import Results from './_components/Results'
 
@@ -27,6 +27,7 @@ const {
 <Layout title="Astroサンプル" menu="top">
   <div class="flex h-screen">
     <div class="w-1/4">
+      <StoreSearch client:only="react"/>
     </div>
     <div class="w-3/4">
       <div class="relative h-full w-2/3">

@@ -24,7 +24,6 @@ const useStores = (q?: string, area?: string, categories?: string[]) => {
       const filters = areaFilter || categoriesFilter || '';
 
       const { contents: data } = await client.get<MicroCMSResponse<Store>>({ endpoint: "stores", queries: { q, filters } });
-      console.log(data);
       setStores(data);
     };
 
