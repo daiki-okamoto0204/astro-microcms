@@ -1,34 +1,20 @@
 import { useCallback } from 'react'
-import type { Prefectures } from '../../types/Prefectures';
 import usePrefectures from '../../hook/usePrefectures';
 
-export const PrefectureSelect = () => {
+type Props = {
+  value: string;
+  onChange: (area: string) => void;
+};
+
+export const PrefectureSelect = ({ value, onChange }: Props) => {
   const { prefectures } = usePrefectures();
-//   const searchParams = useSearchParams()
-//   const pathname = usePathname()
-//   const { replace } = useRouter()
 
-//   const handleChangeArea = useCallback(
-//     (area: string) => {
-//       const params = new URLSearchParams(searchParams)
-
-//       if (area) {
-//         const selectedPrefecture = prefectures.find((pref) => pref.id === area)
-//         params.set('area', area)
-
-//         if (!selectedPrefecture) return
-//         params.set('currentLat', selectedPrefecture.lat.toString())
-//         params.set('currentLng', selectedPrefecture.lng.toString())
-//       } else {
-//         params.delete('area')
-//         params.delete('currentLat')
-//         params.delete('currentLng')
-//       }
-//       replace(`${pathname}?${params.toString()}`)
-//     },
-//     [pathname, replace, searchParams, prefectures]
-//   )
-  console.log(prefectures);
+  const handleChangeArea = useCallback(
+    (area: string) => {
+      onChange(area);
+    },
+    [onChange]
+  )
 
   return (
     <div className="grid gap-2">
@@ -38,10 +24,10 @@ export const PrefectureSelect = () => {
       <select
         id="area"
         className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm "
-        // onChange={(e) => {
-        //   handleChangeArea(e.target.value)
-        // }}
-        // defaultValue={searchParams.get('area')?.toString()}
+        onChange={(e) => {
+          handleChangeArea(e.target.value)
+        }}
+        value={value}
       >
         <option value="">エリアを選択</option>
         {prefectures.map((prefecture) => (

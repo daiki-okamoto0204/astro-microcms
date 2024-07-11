@@ -1,16 +1,32 @@
+import { useState, useEffect } from "react";
 import useStores from "../../hook/useStores";
 import Map from "./Map";
+import { useSearchParams } from '../../hook/useSearchParams';
 
-type Props = {
-  q?: string;
-  area?: string;
-  categories?: string[];
-  currentLat?: string;
-  currentLng?: string;
-}
+const KYOTO_STATION_LOCATION = { lat: 34.985109, lng: 135.758829 };
 
-export const Result = ({ q, area, categories, currentLat, currentLng }: Props) => {
+export const Result = () => {
+  const { searchParams } = useSearchParams();
+  const [q, setQ] = useState(searchParams.get('q') || '');
+  const [area, setArea] = useState(searchParams.get('area') || '');
+  const [categories, setCategories] = useState(searchParams.getAll('categories'));
+  const [currentLat, setCurrentLat] = useState(searchParams.get('currentLat') || KYOTO_STATION_LOCATION.lat.toString());
+  const [currentLng, setCurrentLng] = useState(searchParams.get('currentLng') || KYOTO_STATION_LOCATION.lng.toString());
+
   const { stores } = useStores(q, area, categories);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      setQ(params.get('q') || '');
+      setArea(params.get('area') || '');
+      setCategories(params.getAll('categories'));
+      setCurrentLat(params.get('currentLat') || KYOTO_STATION_LOCATION.lat.toString());
+      setCurrentLng(params.get('currentLng') || KYOTO_STATION_LOCATION.lng.toString());
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
 
   const markerPositions = stores?.map((store) => {
     return { lat: store.lat, lng: store.lng };

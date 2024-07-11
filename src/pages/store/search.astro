@@ -1,9 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { Spinner } from '../../components/shop/Spinner';
 import { StoreSearch } from "../../components/shop/StoreSearch";
 import { Result } from "../../components/shop/Result";
-// import Results from './_components/Results'
 
 type Props = {
   q?: string
@@ -12,16 +10,6 @@ type Props = {
   currentLat?: string
   currentLng?: string
 };
-
-const KYOTO_STATION_LOCATION = { lat: 34.985109, lng: 135.758829 };
-const searchParams:Props = {};
-const {
-  q = '',
-  area = '',
-  categories = [],
-  currentLat = KYOTO_STATION_LOCATION.lat.toString(),
-  currentLng = KYOTO_STATION_LOCATION.lng.toString()
-} = searchParams;
 ---
 
 <Layout title="Astroサンプル" menu="top">
@@ -31,14 +19,7 @@ const {
     </div>
     <div class="w-3/4">
       <div class="relative h-full w-2/3">
-        <Result
-          client:only="react"
-          q={q}
-          area={area}
-          categories={Array.isArray(categories) ? categories : [categories]}
-          currentLat={currentLat}
-          currentLng={currentLng}
-        />
+        <Result client:only="react"/>
       </div>
     </div>
   </div>  
