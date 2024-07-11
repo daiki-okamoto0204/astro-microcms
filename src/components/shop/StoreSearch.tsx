@@ -1,13 +1,17 @@
 'use client'
 import { useState, useEffect } from "react";
 import { PrefectureSelect } from "./PrefectureSelect";
+import { KeyWord } from "./KeyWord";
+import { CategoryCheckBox } from "./CategoryCheckBox";
 import { useSearchParams } from '../../hook/useSearchParams';
-import usePrefectures from "../../hook/usePrefectures";
+import { usePrefectures } from "../../hook/usePrefectures";
+import { useCategories } from "../../hook/useCategories";
 
 export const StoreSearch = () => {
-  const { searchParams, setParam } = useSearchParams();
+  const { searchParams, setParams } = useSearchParams();
   const { prefectures } = usePrefectures();
   const [area, setArea] = useState(searchParams.get('area') || '');
+  const { categories } = useCategories();
 
   useEffect(() => {
     const handlePopState = () => {
@@ -19,20 +23,12 @@ export const StoreSearch = () => {
 
   const handleAreaChange = (newArea: string) => {
     setArea(newArea);
-    let newURL = setParam(['area', newArea]);
-    if (newArea) {
-      const selectedPrefecture = prefectures.find((pref) => pref.id === area);
-      if (!selectedPrefecture) return
-      newURL = setParam([
-          'area', newArea,
-          'currentLat', selectedPrefecture.lat.toString(),
-          'currentLng', selectedPrefecture.lng.toString()
-        ]);
-    } else {
-
-    }
-    alert(newURL);
-    window.location.href = newURL;
+    const selectedPrefecture = prefectures.find((pref) => pref.id === newArea);
+    setParams({
+      area: newArea,
+      currentLat: selectedPrefecture ? selectedPrefecture.lat.toString() : null,
+      currentLng: selectedPrefecture ? selectedPrefecture.lng.toString() : null,
+    });
   };
 
   return (
@@ -40,8 +36,8 @@ export const StoreSearch = () => {
       <div className="grid gap-8">
         <h2 className="text-lg font-bold">店舗検索</h2>
         <PrefectureSelect value={area} onChange={handleAreaChange} />
-        {/* <KeyWord />
-        <CategoryCheckBox categories={categories} /> */}
+        <KeyWord />
+        <CategoryCheckBox categories={categories} />
       </div>
     </section>
   )

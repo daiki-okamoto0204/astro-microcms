@@ -17,25 +17,30 @@ export const useSearchParams = () => {
     };
   }, []);
 
-  const setParam = useCallback((params: Array<string>) => {
-    const newSearchParams = new URLSearchParams();
-    params.map((key, index) => newSearchParams.set(params[key], key))
-    // newSearchParams.set(key, value);
+  const setParams = useCallback((params: Record<string, string>) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+    Object.entries(params).forEach(([key, value]) => {
+      if (value === null || value === undefined) {
+        newSearchParams.delete(key);
+      } else {
+        newSearchParams.set(key, value);
+      }
+    });
     setSearchParams(newSearchParams);
-    return updateURL(newSearchParams);
+    updateURL(newSearchParams);
   }, [searchParams]);
 
   const deleteParam = useCallback((key: string) => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.delete(key);
     setSearchParams(newSearchParams);
-    return updateURL(newSearchParams);
+    updateURL(newSearchParams);
   }, [searchParams]);
 
   const updateURL = (params: URLSearchParams) => {
     const newURL = `${window.location.pathname}?${params.toString()}`;
-    return newURL;
+    window.location.href = newURL;
   };
 
-  return { searchParams, setParam, deleteParam };
+  return { searchParams, setParams, deleteParam };
 };

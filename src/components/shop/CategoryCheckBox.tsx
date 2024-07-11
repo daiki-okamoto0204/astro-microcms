@@ -1,37 +1,27 @@
-'use client'
-import { useCallback } from 'react';
-// import { Route } from 'next'
-// import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import type { StoreCategories } from '../../types/StoreCategories';
+import { useCallback } from 'react'
+import { useSearchParams } from '../../hook/useSearchParams'
+import type { StoreCategories } from '../../types/StoreCategories'
 
-const CategoryCheckBox = ({ categories }: { categories: StoreCategories[] }) => {
-//   const searchParams = useSearchParams()
-//   const pathname = usePathname()
-//   const { replace } = useRouter()
+export const CategoryCheckBox = ({ categories }: { categories: StoreCategories[] }) => {
+  const { searchParams, setParams } = useSearchParams()
 
-//   const handleCheck = useCallback(
-//     (e: React.ChangeEvent<HTMLInputElement>) => {
-//       const params = new URLSearchParams(searchParams)
-//       const value = e.target.value
-
-//       const selectedCategories = new Set(params.get('categories')?.split(',') || [])
-
-//       if (selectedCategories.has(value)) {
-//         selectedCategories.delete(value)
-//       } else {
-//         selectedCategories.add(value)
-//       }
-
-//       if (selectedCategories.size === 0) {
-//         params.delete('categories')
-//       } else {
-//         params.set('categories', Array.from(selectedCategories).join(','))
-//       }
-
-//       replace(`${pathname}?${params.toString()}` as Route)
-//     },
-//     [searchParams, pathname, replace]
-//   )
+  const handleCheck = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value
+      const selectedCategories = new Set(searchParams.get('categories')?.split(',') || [])
+      if (selectedCategories.has(value)) {
+        selectedCategories.delete(value)
+      } else {
+        selectedCategories.add(value)
+      }
+      if (selectedCategories.size === 0) {
+        setParams({ categories: null }) // nullを設定することでパラメータを削除
+      } else {
+        setParams({ categories: Array.from(selectedCategories).join(',') })
+      }
+    },
+    [searchParams, setParams]
+  )
 
   return (
     <fieldset>
@@ -43,10 +33,10 @@ const CategoryCheckBox = ({ categories }: { categories: StoreCategories[] }) => 
               <input
                 type="checkbox"
                 value={category.id}
-                className="peer h-4 w-4 shrink-0 rounded-sm border border-primary "
+                className="peer h-4 w-4 shrink-0 rounded-sm border border-primary"
                 id={category.id}
-                // onChange={handleCheck}
-                // defaultChecked={searchParams.get('categories')?.split(',').includes(category.id)}
+                onChange={handleCheck}
+                defaultChecked={searchParams.get('categories')?.split(',').includes(category.id)}
               />
               <div className="text-sm">
                 <label className="font-medium" htmlFor={category.id}>
@@ -59,6 +49,4 @@ const CategoryCheckBox = ({ categories }: { categories: StoreCategories[] }) => 
       </div>
     </fieldset>
   )
-}
-
-export default CategoryCheckBox
+};

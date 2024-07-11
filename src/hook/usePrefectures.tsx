@@ -3,7 +3,7 @@ import { createClient } from "microcms-js-sdk";
 import type { Prefectures } from "../types/Prefectures";
 import type { MicroCMSResponse } from "../types/MicroCMSResponse";
 
-const usePrefectures = () => {
+export const usePrefectures = () => {
   const [prefectures, setPrefectures] = useState<Prefectures[]>([]);
   const PREFECTURES_LIMIT = 47;
 
@@ -25,5 +25,3 @@ const usePrefectures = () => {
 
   return { prefectures };
 };
-
-export default usePrefectures;

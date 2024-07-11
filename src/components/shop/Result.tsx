@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import useStores from "../../hook/useStores";
 import Map from "./Map";
 import { useSearchParams } from '../../hook/useSearchParams';
@@ -7,32 +7,46 @@ const KYOTO_STATION_LOCATION = { lat: 34.985109, lng: 135.758829 };
 
 export const Result = () => {
   const { searchParams } = useSearchParams();
-  const [q, setQ] = useState(searchParams.get('q') || '');
-  const [area, setArea] = useState(searchParams.get('area') || '');
-  const [categories, setCategories] = useState(searchParams.getAll('categories'));
-  const [currentLat, setCurrentLat] = useState(searchParams.get('currentLat') || KYOTO_STATION_LOCATION.lat.toString());
-  const [currentLng, setCurrentLng] = useState(searchParams.get('currentLng') || KYOTO_STATION_LOCATION.lng.toString());
+  const [searchState, setSearchState] = useState({
+    q: searchParams.get('q') || '',
+    area: searchParams.get('area') || '',
+    categories: searchParams.get('categories')?.split(',') || [],
+    currentLat: searchParams.get('currentLat') || KYOTO_STATION_LOCATION.lat.toString(),
+    currentLng: searchParams.get('currentLng') || KYOTO_STATION_LOCATION.lng.toString(),
+  });
 
-  const { stores } = useStores(q, area, categories);
+  const { stores, isLoading, error } = useStores(searchState.q, searchState.area, searchState.categories);
+
+  const updateSearchState = useCallback(() => {
+    setSearchState({
+      q: searchParams.get('q') || '',
+      area: searchParams.get('area') || '',
+      categories: searchParams.get('categories')?.split(',') || [],
+      currentLat: searchParams.get('currentLat') || KYOTO_STATION_LOCATION.lat.toString(),
+      currentLng: searchParams.get('currentLng') || KYOTO_STATION_LOCATION.lng.toString(),
+    });
+  }, [searchParams]);
+
+  useEffect(() => {
+    updateSearchState();
+  }, [updateSearchState]);
 
   useEffect(() => {
     const handlePopState = () => {
-      const params = new URLSearchParams(window.location.search);
-      setQ(params.get('q') || '');
-      setArea(params.get('area') || '');
-      setCategories(params.getAll('categories'));
-      setCurrentLat(params.get('currentLat') || KYOTO_STATION_LOCATION.lat.toString());
-      setCurrentLng(params.get('currentLng') || KYOTO_STATION_LOCATION.lng.toString());
+      updateSearchState();
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [updateSearchState]);
 
   const markerPositions = stores?.map((store) => {
     return { lat: store.lat, lng: store.lng };
   });
 
-  const center = { lat: Number(currentLat), lng: Number(currentLng) };
+  const center = { lat: Number(searchState.currentLat), lng: Number(searchState.currentLng) };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="flex h-full">
@@ -59,5 +73,5 @@ export const Result = () => {
         <Map positions={markerPositions} center={center} />
       </div>
     </div>
-  )
+  );
 };

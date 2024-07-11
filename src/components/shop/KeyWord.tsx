@@ -1,29 +1,23 @@
-'use client'
-// import { FormEvent } from 'react';
+import type { FormEvent } from 'react'
+import { SearchIcon } from 'lucide-react'
+import { useSearchParams } from '../../hook/useSearchParams'
 
-const KeyWord = () => {
-//   const searchParams = useSearchParams()
-//   const pathname = usePathname()
-//   const { replace } = useRouter()
+export const KeyWord = () => {
+  const { searchParams, setParams } = useSearchParams()
 
-//   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-//     e.preventDefault()
-
-//     const params = new URLSearchParams(searchParams)
-
-//     const formData = new FormData(e.currentTarget)
-//     const q = formData.get('q')?.toString()
-
-//     if (q) {
-//       params.set('q', q)
-//     } else {
-//       params.delete('q')
-//     }
-//     replace(`${pathname}?${params.toString()}`)
-//   }
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const q = formData.get('q')?.toString()
+    if (q) {
+      setParams({ q })
+    } else {
+      setParams({ q: null }) // nullを設定することでパラメータを削除
+    }
+  }
 
   return (
-    <form className="grid gap-2">
+    <form onSubmit={handleSubmit} className="grid gap-2">
       <label htmlFor="q" className="font-bold">
         キーワードから探す
       </label>
@@ -34,14 +28,12 @@ const KeyWord = () => {
           name="q"
           placeholder="店舗名・住所を入力"
           className="w-full px-3 py-2 focus:outline-none focus-visible:outline-1"
-        //   defaultValue={searchParams.get('q')?.toString()}
+          defaultValue={searchParams.get('q')?.toString()}
         />
-        <button aria-label="検索する">
-          
+        <button type="submit" aria-label="検索する">
+          <SearchIcon className="h-4 w-4 opacity-50" />
         </button>
       </div>
     </form>
   )
-}
-
-export default KeyWord
+};

@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import usePrefectures from '../../hook/usePrefectures';
+import { usePrefectures } from '../../hook/usePrefectures';
 
 type Props = {
   value: string;
