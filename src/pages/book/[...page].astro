@@ -6,7 +6,7 @@ import type { GetStaticPathsOptions } from 'astro';
 
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const books = await getBooks({ limit: 100 });
-  const pageSize = import.meta.env.BOOK_PER_PAGE
+  const pageSize = 9;
   return paginate(books.contents, { pageSize });
 };
 const { page } = Astro.props;
