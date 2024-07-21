@@ -1,0 +1,12 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { ContactForm } from "../../components/ContactForm";
+---
+
+<Layout title="お問い合わせ｜Astroサンプル" menu="contact">
+  <div class="bg-white py-24 sm:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <ContactForm client:only="react"/>
+    </div>
+  </div>
+</Layout>
